@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var totalRepayment: Double? = nil
     @State private var selectedTenure: Tenure = .ONE
-    @State private var totalTransaction: Double = 0
+    @State private var principal: Double = 0
     
     var body: some View {
         NavigationStack {
@@ -43,7 +43,7 @@ struct ContentView: View {
                         
                         TextField(
                             "Total Transaction",
-                            value: $totalTransaction,
+                            value: $principal,
                             format: .currency(code: "IDR")
                         )
                         .keyboardType(.numberPad)
@@ -52,11 +52,11 @@ struct ContentView: View {
                         
                         Button("Calculate") {
                             totalRepayment = LendingCalculator.shared.calculateTotalRepayment(
-                                totalTransaction,
+                                principal,
                                 tenure: .ONE
                             )
                         }
-                        .disabled(totalTransaction == 0)
+                        .disabled(principal == 0)
                     }
                 }
             }
