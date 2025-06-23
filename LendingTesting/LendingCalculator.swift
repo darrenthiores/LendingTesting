@@ -26,6 +26,17 @@ struct LendingCalculator {
     }
     
     /**
+     Requirement: Late fee should be 5k rupiah / day
+     */
+    func calculateLateFee(_ days: Int) -> Double? {
+        guard days > 0 else {
+            return nil
+        }
+        
+        return 5_000 * Double(days)
+    }
+    
+    /**
      Requirement: If total repayment pass the limit of 50k rupiah, user will be charged with fee
      */
     func shouldChargeFee(
