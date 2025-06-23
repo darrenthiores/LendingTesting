@@ -17,7 +17,7 @@ struct LendingCalculator {
         tenure: Tenure
     ) -> Double {
         let monthly = totalTransaction / Double(tenure.rawValue)
-        let totalMonthly = monthly + (monthly * 0.05)
+        let totalMonthly = monthly + (totalTransaction * 0.05)
         
         return totalMonthly * Double(tenure.rawValue)
     }
