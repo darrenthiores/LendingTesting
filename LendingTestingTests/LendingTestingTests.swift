@@ -22,6 +22,12 @@ struct LendingTestingTests {
         
         #expect(calculation == expected)
     }
+    
+    @Test("Calculate late fee for 3 days late")
+    func testLateFeeCalculation() throws {
+        let lateFee = try #require(LendingCalculator.shared.calculateLateFee(3))
+        #expect(lateFee == 15_000)
+    }
 
     @Test("All tenure test: 50.000", arguments: [
         (50000, Tenure.ONE, 52500),
