@@ -37,14 +37,11 @@ struct LendingCalculator {
     }
     
     /**
-     Requirement: If total repayment pass the limit of 50k rupiah, user will be charged with fee
+     Requirement: If tenure selection is more than 1, user will be charged with fee
      */
     func shouldChargeFee(
-        _ principal: Double,
         tenure: Tenure
     ) -> Bool {
-        let totalRepayment = calculateTotalRepayment(principal, tenure: tenure)
-        
-        return totalRepayment > 50_000
+        return tenure.rawValue > 1
     }
 }
