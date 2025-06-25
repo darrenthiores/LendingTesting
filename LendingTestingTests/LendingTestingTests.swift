@@ -8,49 +8,46 @@
 import Testing
 @testable import LendingTesting
 
-struct LendingTestingTests {
-
-    @Test("One month tenure test: 50.000")
-    func oneMonthTenure() {
-        let expected: Double = 52500
-        
-        let transaction: Double = 50000
-        let calculation = LendingCalculator.shared.calculateTotalRepayment(
-            transaction,
-            tenure: .ONE
-        )
-        
-        #expect(calculation == expected)
-    }
+@Test("One month tenure test: 50.000")
+func oneMonthTenure() {
+    let expected: Double = 52500
     
-    @Test("Calculate late fee for 3 days late")
-    func testLateFeeCalculation() throws {
-        let lateFee = try #require(LendingCalculator.shared.calculateLateFee(3))
-        #expect(lateFee == 15_000)
-    }
+    let transaction: Double = 50000
+    let calculation = LendingCalculator.shared.calculateTotalRepayment(
+        transaction,
+        tenure: .ONE
+    )
     
-    @Test("Check if 2 and 3 months tenure charged with fee", arguments: [Tenure.TWO, .THREE])
-    func testChargeFee(
-        _ tenure: Tenure
-    ) {
-        #expect(
-            LendingCalculator.shared.shouldChargeFee(tenure: tenure)
-        )
-    }
+    #expect(calculation == expected)
+}
 
-    @Test("All tenure test: 50.000", arguments: [
-        (50000, Tenure.ONE, 52500),
-        (50000, Tenure.TWO, 55000),
-        (63000, Tenure.THREE, 72450),
-    ])
-    func testRepaymentCalculation(
-        arguments: (totalTransaction: Double, tenure: Tenure, expectation: Double)
-    ) {
-        let calculation = LendingCalculator.shared.calculateTotalRepayment(
-            arguments.totalTransaction,
-            tenure: arguments.tenure
-        )
-        
-        #expect(calculation == arguments.expectation)
-    }
+@Test("Calculate late fee for 3 days late")
+func testLateFeeCalculation() throws {
+    let lateFee = try #require(LendingCalculator.shared.calculateLateFee(3))
+    #expect(lateFee == 15_000)
+}
+
+@Test("Check if 2 and 3 months tenure charged with fee", arguments: [Tenure.TWO, .THREE])
+func testChargeFee(
+    _ tenure: Tenure
+) {
+    #expect(
+        LendingCalculator.shared.shouldChargeFee(tenure: tenure)
+    )
+}
+
+@Test("All tenure test: 50.000", arguments: [
+    (50000, Tenure.ONE, 52500),
+    (50000, Tenure.TWO, 55000),
+    (63000, Tenure.THREE, 72450),
+])
+func testRepaymentCalculation(
+    arguments: (totalTransaction: Double, tenure: Tenure, expectation: Double)
+) {
+    let calculation = LendingCalculator.shared.calculateTotalRepayment(
+        arguments.totalTransaction,
+        tenure: arguments.tenure
+    )
+    
+    #expect(calculation == arguments.expectation)
 }
